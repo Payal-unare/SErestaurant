@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu — India Restaurant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body class="antialiased text-gray-800">
+
+<!-- NAVBAR -->
+<div id="navbar"></div>
+
+<!-- HERO -->
+<section class="relative">
+  <div class="relative h-72 md:h-96 bg-cover bg-center" 
+       style="background-image:url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1600&q=80')">
+    <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+      <h1 class="text-white text-4xl md:text-5xl font-extrabold">Our Menu</h1>
+    </div>
+  </div>
+</section>
+
+<!-- MENU SECTION -->
+<section class="max-w-7xl mx-auto px-6 py-12">
+  <h2 class="text-3xl font-bold mb-8 text-center">All Dishes</h2>
+  <div id="menuContent" class="grid md:grid-cols-3 gap-8"></div>
+  <p id="noMenuMessage" class="text-center text-gray-500 mt-10 hidden">No dishes available yet!</p>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-300 py-10 mt-12">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 px-6">
+    <div>
+      <h4 class="font-bold text-white mb-3">India Restaurant</h4>
+      <p>Serving Kolkata with authentic vegetarian dishes since 1990.</p>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-3">Quick Links</h4>
+      <ul class="space-y-2">
+        <li><a href="index.html" class="hover:text-white">Home</a></li>
+        <li><a href="about.html" class="hover:text-white">About</a></li>
+        <li><a href="menu.html" class="hover:text-white">Menu</a></li>
+        <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+        <li><a href="reservation.html" class="hover:text-white">Reservation</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-3">Contact</h4>
+      <p>Kolkata, India</p>
+      <p>+91 98765 43210</p>
+      <p>info@indiarestaurant.com</p>
+    </div>
+  </div>
+  <div class="text-center text-sm text-gray-500 mt-6">© 2025 India Restaurant. All rights reserved.</div>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+let dishes = [];
+
+// Load Menu from Backend
+async function loadMenu() {
+  try {
+    const res = await fetch("http://localhost:5002/api/menu/");
+    if (!res.ok) throw new Error("Failed to fetch menu");
+    dishes = await res.json();
+
+    if (!dishes || dishes.length === 0) {
+      document.getElementById("noMenuMessage").classList.remove("hidden");
+      return;
+    }
+
+    displayAllDishes();
+  } catch (err) {
+    console.error("Error loading menu:", err);
+    document.getElementById("noMenuMessage").classList.remove("hidden");
+  }
+}
+
+// Display all dishes
+function displayAllDishes() {
+  const container = document.getElementById("menuContent");
+  container.innerHTML = dishes.map(dish => `
+    <div class="p-6 rounded-xl shadow hover:shadow-lg transition" data-aos="zoom-in">
+      <img src="${dish.image && dish.image.trim() !== '' ? dish.image : 'https://placehold.co/400x300?text=No+Image'}" 
+           alt="${dish.name}" class="h-40 w-full object-cover rounded-md mb-4">
+      <h3 class="font-bold text-lg">${dish.name}</h3>
+      <p class="text-gray-600">${dish.description}</p>
+      <p class="text-red-700 font-semibold mt-2">₹${dish.price}</p>
+    </div>
+  `).join('');
+
+  AOS.refresh();
+}
+
+// Initialize
+loadMenu();
+AOS.init({ duration: 600, once: true });
+
+// Load Navbar
+async function loadNavbar() {
+  try {
+    const res = await fetch("navbar.html");
+    const html = await res.text();
+    document.getElementById("navbar").innerHTML = html;
+
+    // ✅ Fix for profile icon dropdown
+    // Attach the toggleProfileDropdown function globally after navbar is loaded
+    window.toggleProfileDropdown = function () {
+      const dropdown = document.getElementById("profileDropdown");
+      if (dropdown) dropdown.classList.toggle("hidden");
+    };
+
+    // Optional: Hide dropdown when clicking outside
+    document.addEventListener("click", function(event) {
+      const dropdown = document.getElementById("profileDropdown");
+      const btn = document.getElementById("profileIconBtn");
+      if (dropdown && !dropdown.classList.contains("hidden")) {
+        if (!dropdown.contains(event.target) && !btn.contains(event.target)) {
+          dropdown.classList.add("hidden");
+        }
+      }
+    });
+
+  } catch (err) {
+    console.error("Failed to load navbar:", err);
+  }
+}
+loadNavbar();
+</script>
+
+</body>
+</html>    this is menu.html add that feature in it but dont change base and design

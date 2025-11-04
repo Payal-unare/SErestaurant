@@ -1,0 +1,13 @@
+const express = require('express');
+const router = express.Router();
+const userController = require('../controller/user.controller');
+
+router.post('/register', userController.registerUser);
+router.post('/login', userController.loginUser);
+
+// New route for changing password
+// Change password route
+router.put('/change-password/:id', userController.changePassword);
+
+
+module.exports = router;

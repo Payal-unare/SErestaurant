@@ -1,0 +1,54 @@
+/* css/style.css */
+/* Small custom styles + animations */
+
+:root{
+  --brand: #16a34a;
+  --brand-dark: #15803d;
+}
+
+/* Basic helpers */
+.container { max-width: 1100px; margin-left:auto; margin-right:auto; padding-left:16px; padding-right:16px; }
+
+/* Animated helpers */
+@keyframes fadeUp { from { opacity:0; transform: translateY(18px);} to { opacity:1; transform: translateY(0);} }
+.fade-up { animation: fadeUp .7s ease forwards; opacity:0; }
+
+@keyframes scaleIn { from { opacity:0; transform: scale(.98);} to { opacity:1; transform: scale(1);} }
+.scale-in { animation: scaleIn .45s ease forwards; opacity:0; }
+
+.hero-overlay { background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.45)); }
+
+/* Menu card styles (complement Tailwind) */
+.menu-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.08);
+  background: white;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.menu-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(2,6,23,0.12); }
+
+/* Gallery images */
+.gallery-img { transition: transform .35s ease, box-shadow .35s ease; cursor: pointer; }
+.gallery-img:hover { transform: scale(1.06); box-shadow: 0 20px 40px rgba(2,6,23,0.12); }
+
+/* Floating cart */
+.cart-box { width: 320px; max-width: calc(100vw - 32px); }
+
+/* Lightbox backdrop */
+#lightboxBackdrop {
+  position: fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  background: rgba(0,0,0,0.85); z-index: 60; padding: 20px;
+}
+#lightboxBackdrop img { max-width: 100%; max-height: 80vh; border-radius:8px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+
+/* toast */
+#toast {
+  position: fixed; right: 20px; bottom: 28px; z-index: 80;
+  background: rgba(0,0,0,0.85); color:white; padding:10px 14px; border-radius:8px; display:none;
+}
+
+/* small responsive tweak for hero */
+@media (max-width:640px) {
+  .hero-cta { width: 90%; }
+}

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — India Restaurant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- NAVBAR -->
+  <header class="bg-red-700 text-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+    <nav class="space-x-6">
+      <button onclick="showSection('home')" class="hover:underline">Home</button>
+      <button onclick="showSection('reservations')" class="hover:underline">Reservations</button>
+      <button onclick="showSection('contacts')" class="hover:underline">Contact</button>
+      <button onclick="showSection('menu')" class="hover:underline">Menu</button>
+    </nav>
+    <button id="logoutBtn" class="bg-white text-red-700 px-4 py-2 rounded hover:bg-gray-200">Logout</button>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-7xl mx-auto p-6">
+
+    <!-- HOME SECTION -->
+    <section id="homeSection">
+      <h2 class="text-2xl font-semibold mb-6">Dashboard Overview</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Cards -->
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+          <h3 class="text-gray-500 text-sm">Total Reservations</h3>
+          <p id="reservationCount" class="text-3xl font-bold text-red-700 mt-2">0</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+          <h3 class="text-gray-500 text-sm">Total Contacts</h3>
+          <p id="contactCount" class="text-3xl font-bold text-red-700 mt-2">0</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+          <h3 class="text-gray-500 text-sm">Menu Dishes</h3>
+          <p id="menuCount" class="text-3xl font-bold text-red-700 mt-2">0</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow text-center">
+          <h3 class="text-gray-500 text-sm">Admins Online</h3>
+          <p id="adminCount" class="text-3xl font-bold text-red-700 mt-2">1</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESERVATION SECTION -->
+    <section id="reservationSection" class="hidden">
+      <h2 class="text-xl font-semibold mb-4">Reservations</h2>
+
+      <div class="overflow-x-auto bg-white shadow rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-red-700 text-white">
+            <tr>
+              <th class="px-6 py-3 text-left text-sm font-medium">Name</th>
+              <th class="px-6 py-3 text-left text-sm font-medium">Email</th>
+              <th class="px-6 py-3 text-left text-sm font-medium">Phone</th>
+              <th class="px-6 py-3 text-left text-sm font-medium">Date</th>
+              <th class="px-6 py-3 text-left text-sm font-medium">Time</th>
+              <th class="px-6 py-3 text-left text-sm font-medium">People</th>
+              <th class="px-6 py-3 text-left text-sm font-medium">Special Requests</th>
+            </tr>
+          </thead>
+          <tbody id="reservationList" class="divide-y divide-gray-200"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contactSection" class="hidden">
+      <h2 class="text-xl font-semibold mb-4">Contact Messages</h2>
+      <div class="overflow-x-auto bg-white shadow rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-red-700 text-white">
+            <tr>
+              <th class="px-6 py-3 text-left text-sm font-medium">Name</th>
+              <th class="px-6 py-3 text-left text-sm font-medium">Email</th>
+              <th class="px-6 py-3 text-left text-sm font-medium">Message</th>
+            </tr>
+          </thead>
+          <tbody id="contactList" class="divide-y divide-gray-200"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section id="menuSection" class="hidden">
+      <h2 class="text-xl font-semibold mb-4">Add New Dish</h2>
+
+      <form id="addDishForm" class="bg-white p-6 shadow rounded-lg space-y-4 max-w-lg">
+        <input type="text" name="name" placeholder="Dish Name" required class="w-full border p-2 rounded">
+        <input type="number" name="price" placeholder="Price" required class="w-full border p-2 rounded">
+        <input type="text" name="category" placeholder="Category" required class="w-full border p-2 rounded">
+        <input type="text" name="image" placeholder="Image URL (optional)" class="w-full border p-2 rounded">
+        <textarea name="description" placeholder="Description" class="w-full border p-2 rounded"></textarea>
+        <button type="submit" class="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800">Add Dish</button>
+      </form>
+    </section>
+
+  </main>
+
+  <script>
+    // ----------------------
+    // AUTH & LOGOUT
+    // ----------------------
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('admin');
+      window.location.href = 'admin-login.html';
+    });
+
+    const admin = JSON.parse(localStorage.getItem('admin'));
+    if (!admin) window.location.href = 'admin-login.html';
+
+
+    // ----------------------
+    // SECTION NAVIGATION
+    // ----------------------
+    function showSection(section) {
+      document.getElementById('homeSection').classList.add('hidden');
+      document.getElementById('reservationSection').classList.add('hidden');
+      document.getElementById('contactSection').classList.add('hidden');
+      document.getElementById('menuSection').classList.add('hidden');
+
+      if (section === 'home') document.getElementById('homeSection').classList.remove('hidden');
+      if (section === 'reservations') document.getElementById('reservationSection').classList.remove('hidden');
+      if (section === 'contacts') document.getElementById('contactSection').classList.remove('hidden');
+      if (section === 'menu') document.getElementById('menuSection').classList.remove('hidden');
+    }
+
+    // ----------------------
+    // FETCH RESERVATIONS
+    // ----------------------
+    async function fetchReservations() {
+      try {
+        const res = await fetch('http://localhost:5002/api/reservations');
+        if (!res.ok) throw new Error('Failed to fetch reservations');
+        const reservations = await res.json();
+        document.getElementById('reservationCount').innerText = reservations.length;
+
+        const container = document.getElementById('reservationList');
+        container.innerHTML = reservations.map(r => `
+          <tr>
+            <td class="px-6 py-4 text-sm">${r.fullName}</td>
+            <td class="px-6 py-4 text-sm">${r.email}</td>
+            <td class="px-6 py-4 text-sm">${r.phone}</td>
+            <td class="px-6 py-4 text-sm">${new Date(r.date).toLocaleDateString()}</td>
+            <td class="px-6 py-4 text-sm">${r.time}</td>
+            <td class="px-6 py-4 text-sm">${r.people}</td>
+            <td class="px-6 py-4 text-sm">${r.specialRequests || '-'}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // ----------------------
+    // FETCH CONTACTS
+    // ----------------------
+    async function fetchContacts() {
+      try {
+        const res = await fetch('http://localhost:5002/api/contact');
+        if (!res.ok) throw new Error('Failed to fetch contacts');
+        const contacts = await res.json();
+        document.getElementById('contactCount').innerText = contacts.length;
+
+        const container = document.getElementById('contactList');
+        container.innerHTML = contacts.map(c => `
+          <tr>
+            <td class="px-6 py-4 text-sm">${c.name}</td>
+            <td class="px-6 py-4 text-sm">${c.email}</td>
+            <td class="px-6 py-4 text-sm">${c.message}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // ----------------------
+    // FETCH MENU COUNT
+    // ----------------------
+    async function fetchMenuCount() {
+      try {
+        const res = await fetch('http://localhost:5002/api/menu');
+        if (!res.ok) throw new Error('Failed to fetch menu');
+        const menu = await res.json();
+        document.getElementById('menuCount').innerText = menu.length || 0;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // ----------------------
+    // ADD NEW DISH
+    // ----------------------
+    document.getElementById('addDishForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        price: parseInt(form.price.value),
+        category: form.category.value,
+        description: form.description.value,
+        image: form.image.value
+      };
+      try {
+        const res = await fetch('http://localhost:5002/api/menu/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        alert(result.message || 'Dish added successfully!');
+        form.reset();
+        fetchMenuCount(); // Update menu count
+      } catch (err) {
+        console.error(err);
+        alert('Failed to add dish');
+      }
+    });
+
+    // ----------------------
+    // INIT LOAD
+    // ----------------------
+    fetchReservations();
+    fetchContacts();
+    fetchMenuCount();
+  </script>
+</body>
+</html>

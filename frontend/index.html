@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>India Restaurant — Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body class="antialiased text-gray-800 bg-black">
+
+  <!-- NAVBAR PLACEHOLDER -->
+  <div id="navbar-placeholder"></div>
+
+  <script>
+    async function loadNavbar() {
+      const res = await fetch("navbar.html");
+      const text = await res.text();
+      document.getElementById("navbar-placeholder").innerHTML = text;
+
+      // After navbar is loaded, define dropdown functions
+      window.toggleProfileDropdown = function() {
+        const dropdown = document.getElementById("profileDropdown");
+        if(dropdown) dropdown.classList.toggle("hidden");
+      };
+
+      window.logout = function() {
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("role");
+        window.location.href = "index.html";
+      };
+
+      // Optionally hide dropdown when clicking outside
+      window.addEventListener("click", function(e) {
+        const dropdown = document.getElementById("profileDropdown");
+        const btn = document.getElementById("profileIconBtn");
+        if(dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+          dropdown.classList.add("hidden");
+        }
+      });
+
+      // Update profile dropdown dynamically
+      const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+      const profileDropdown = document.getElementById("profileDropdown");
+      if(loggedUser && profileDropdown) {
+        profileDropdown.innerHTML = `
+          <a href="profile.html" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+          <a href="#" onclick="logout()" class="block px-4 py-2 hover:bg-gray-100">Sign Out</a>
+        `;
+      }
+    }
+    loadNavbar();
+  </script>
+
+  <!-- HERO SLIDER -->
+  <section class="relative pt-16">
+    <div class="swiper mySwiper h-screen">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide relative">
+          <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1950&q=80" 
+               class="w-full h-screen object-cover">
+          <div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center text-white">
+            <h1 class="text-5xl font-extrabold mb-4">Pure Veg Experience</h1>
+            <p class="mb-6 text-lg">Authentic flavors, crafted with love</p>
+            <a href="menu.html" class="bg-red-600 px-6 py-3 rounded shadow hover:bg-red-700">View Menu</a>
+          </div>
+        </div>
+
+<!-- Slide 1 --> <div class="swiper-slide relative"> <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1950&q=80" class="w-full h-screen object-cover">
+   <div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center text-white">
+     <h1 class="text-5xl font-extrabold mb-4">Pure Veg Experience</h1> 
+     <p class="mb-6 text-lg">Authentic flavors, crafted with love</p> 
+     <a href="menu.html" class="bg-red-600 px-6 py-3 rounded shadow hover:bg-red-700">View Menu</a> </div> </div>
+      <!-- Slide 2 --> <div class="swiper-slide relative"> <img src="images/hero2.jpg" alt="Dish 1" class="w-full h-screen object-cover">
+         <div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center text-white"> 
+          <h1 class="text-5xl font-extrabold mb-4">Family Dining</h1> 
+          <p class="mb-6 text-lg">A place where tradition meets taste</p>
+           <a href="reservation.html" class="bg-red-600 px-6 py-3 rounded shadow hover:bg-red-700">Book Now</a>
+           </div> </div> 
+           <!-- Slide 3 --> <div class="swiper-slide relative"> <img src="images/hero3.jpg" class="w-full h-screen object-cover">
+               <div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center text-white">
+                <h1 class="text-5xl font-extrabold mb-4">Authentic Kolkata Taste</h1> 
+                <p class="mb-6 text-lg">Serving happiness since 1990</p> 
+                <a href="about.html" class="bg-red-600 px-6 py-3 rounded shadow hover:bg-red-700">Know More</a>
+               </div> </div> </div>
+
+        <!-- Add more slides as needed -->
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </section>
+
+
+  <style>
+    /* Custom keyframes for scroll animation */
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .animate-scroll {
+      animation: scroll 25s linear infinite;
+    }
+
+    /* Pause animation on hover */
+    .pause:hover .animate-scroll {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+  <!-- Moving Gallery Section -->
+  <div class="pause overflow-hidden w-full max-w mx-auto py-10">
+    <div class="flex animate-scroll">
+      <!-- Image set (duplicated for infinite loop) -->
+      <div class="flex gap-6">
+        <img src="images/sliding5.jpg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding1.jpg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding3.jpeg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding4.jpg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding5.jpg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding6.webp" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+      </div>
+
+      <!-- Duplicate same images for seamless loop -->
+      <div class="flex gap-6">
+        <img src="images/sliding6.webp" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding2.jpg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding3.jpeg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding4.jpg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding5.jpg" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+        <img src="images/sliding6.webp" class="w-64 h-40 object-cover rounded-xl shadow-lg">
+      </div>
+    </div>
+  </div>
+
+
+<!-- ABOUT PREVIEW --> <section class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
+   <img src="images/aboutusHero.jpg" class="rounded-xl shadow-lg" alt="Veg Dish"> 
+   <div data-aos="fade-left">
+     <h2 class="text-3xl font-bold mb-4 text-white">About Us</h2>
+      <p class="text-gray-200 mb-4">India Restaurant has been Kolkata’s favorite destination for authentic vegetarian cuisine. We blend tradition with modern flavors.</p> 
+      <a href="about.html" class="text-red-700 font-semibold hover:underline">Read More →</a> 
+    </div>
+   </section>
+
+  <!-- CTA -->
+  <section class="bg-red-700 text-white py-12 pt-26 mt-8 text-center">
+    <h3 class="text-2xl font-bold mb-3">Reserve Your Table Today</h3>
+    <a href="reservation.html" class="bg-white text-red-700 px-6 py-3 rounded font-semibold hover:bg-gray-200">Book Now</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-300 py-10 mt-12">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 px-6">
+      <div>
+        <h4 class="font-bold text-white mb-3">India Restaurant</h4>
+        <p>Serving Kolkata with authentic vegetarian dishes since 1990. India Restaurant is known for creating unforgettable food experiences.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="hover:text-white">Home</a></li>
+          <li><a href="menu.html" class="hover:text-white">Menu</a></li>
+          <li><a href="reservation.html" class="hover:text-white">Reservation</a></li>
+          <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Contact</h4>
+        <p>Kolkata, India</p>
+        <p>+91 98765 43210</p>
+        <p>info@indiarestaurant.com</p>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-6">© 2025 India Restaurant. All rights reserved.</div>
+  </footer>
+
+  <!-- INIT SCRIPTS -->
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      loop: true,
+      autoplay: { delay: 4000 },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    });
+    AOS.init();
+  </script>
+
+  <!-- LOAD NAVBAR DYNAMICALLY -->
+  <script>
+  async function loadNavbar() {
+    const res = await fetch("navbar.html");
+    const text = await res.text();
+    document.getElementById("navbar-placeholder").innerHTML = text;
+
+    // After navbar is loaded, define dropdown functions
+    window.toggleProfileDropdown = function() {
+      const dropdown = document.getElementById("profileDropdown");
+      if(dropdown) dropdown.classList.toggle("hidden");
+    };
+
+    window.logout = function() {
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("role");
+      location.reload();
+    };
+
+    // Close dropdown when clicking outside
+    window.addEventListener("click", function(e) {
+      const dropdown = document.getElementById("profileDropdown");
+      const btn = document.getElementById("profileIconBtn");
+      if(dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+
+    // Update profile dropdown dynamically
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const role = localStorage.getItem("role");
+    const profileDropdown = document.getElementById("profileDropdown");
+    const profileUserName = document.getElementById("profileUserName");
+    const signinLink = document.getElementById("signinLink");
+    const signupLink = document.getElementById("signupLink");
+    const adminLink = document.getElementById("adminLink");
+    const signOutBtn = document.getElementById("signOutBtn");
+
+    if(user && profileDropdown) {
+      profileUserName.textContent = user.name || user.email;
+      profileUserName.classList.remove("hidden");
+      signinLink.style.display = "none";
+      signupLink.style.display = "none";
+      adminLink.style.display = role === "admin" ? "block" : "none";
+      signOutBtn.classList.remove("hidden");
+    } else if(profileDropdown) {
+      profileUserName.classList.add("hidden");
+      signinLink.style.display = "block";
+      signupLink.style.display = "block";
+      adminLink.style.display = "block";
+      signOutBtn.classList.add("hidden");
+    }
+
+    // Sign out
+    if(signOutBtn) {
+      signOutBtn.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("role");
+        location.reload();
+      });
+    }
+  }
+
+  loadNavbar();
+</script>
+
+</body>
+</html>

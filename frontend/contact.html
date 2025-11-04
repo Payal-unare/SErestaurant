@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — India Restaurant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body class="antialiased text-gray-800 bg-green-50">
+
+  <!-- NAVBAR PLACEHOLDER -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- HERO -->
+  <section class="relative pt-10">
+    <div class="relative h-72 md:h-96 bg-cover bg-center" 
+         style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&q=80')">
+      <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+        <h1 class="text-white text-4xl md:text-5xl font-extrabold">Contact Us</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT INFO -->
+  <section class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12">
+    <div data-aos="fade-right">
+      <h2 class="text-3xl font-bold mb-6">Get in Touch</h2>
+      <p class="text-gray-700 mb-4">Have a question or want to book a table? Reach out to us:</p>
+      <ul class="space-y-3 text-gray-700">
+        <li><strong>Address:</strong> Kolkata, India</li>
+        <li><strong>Phone:</strong> +91 98765 43210</li>
+        <li><strong>Email:</strong> info@indiarestaurant.com</li>
+      </ul>
+      <div class="mt-6">
+        <h3 class="text-xl font-semibold mb-3">Follow Us</h3>
+        <div class="flex space-x-4">
+          <a href="#" class="text-red-700 hover:text-green-900">Facebook</a>
+          <a href="#" class="text-red-700 hover:text-green-900">Instagram</a>
+          <a href="#" class="text-red-700 hover:text-green-900">Twitter</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT FORM -->
+    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-4 bg-green-50 p-6 rounded-xl shadow-lg" data-aos="fade-left">
+      <input type="hidden" name="access_key" value="d1a2d389-9c05-4eb3-a6a5-2740dfd01bae">
+      <p>Name</p>
+      <input type="text" name="name" placeholder="Full Name" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700"  required>
+      <p>Email</p>
+      <input type="email" name="email" placeholder="Email" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700" required>
+      <p>Message</p>
+      <textarea name="message" placeholder="Your Message" rows="5" class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700" required></textarea>
+      <div class="text-center">
+        <button type="submit" class="bg-green-700 text-white px-6 py-3 rounded font-semibold hover:bg-green-800 transition">Send Message</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- GOOGLE MAP -->
+  <section class="max-w-7xl mx-auto px-6 pb-16">
+    <div class="rounded-xl overflow-hidden shadow-lg" data-aos="zoom-in">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3689.5678187825!2d88.36389581544821!3d22.57264638512316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02770e3cf2eb3f%3A0xc7c2e80a3c7f3f57!2sKolkata%2C%20West%20Bengal%2C%20India!5e0!3m2!1sen!2sus!4v1696062342345!5m2!1sen!2sus" 
+        width="100%" 
+        height="400" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-300 py-10 mt-12">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 px-6">
+      <div>
+        <h4 class="font-bold text-white mb-3">India Restaurant</h4>
+        <p>Serving Kolkata with authentic vegetarian dishes since 1990.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="hover:text-white">Home</a></li>
+          <li><a href="menu.html" class="hover:text-white">Menu</a></li>
+          <li><a href="reservation.html" class="hover:text-white">Reservation</a></li>
+          <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Contact</h4>
+        <p>Kolkata, India</p>
+        <p>+91 98765 43210</p>
+        <p>info@indiarestaurant.com</p>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-6">© 2025 India Restaurant. All rights reserved.</div>
+  </footer>
+
+  <!-- INIT AOS -->
+  <script>AOS.init();</script>
+
+
+  <!-- LOAD NAVBAR DYNAMICALLY -->
+  <script>
+  async function loadNavbar() {
+    const res = await fetch("navbar.html");
+    const text = await res.text();
+    document.getElementById("navbar-placeholder").innerHTML = text;
+
+    // After navbar is loaded, define dropdown functions
+    window.toggleProfileDropdown = function() {
+      const dropdown = document.getElementById("profileDropdown");
+      if(dropdown) dropdown.classList.toggle("hidden");
+    };
+
+    window.logout = function() {
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("role");
+      location.reload();
+    };
+
+    // Close dropdown when clicking outside
+    window.addEventListener("click", function(e) {
+      const dropdown = document.getElementById("profileDropdown");
+      const btn = document.getElementById("profileIconBtn");
+      if(dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+
+    // Update profile dropdown dynamically
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const role = localStorage.getItem("role");
+    const profileDropdown = document.getElementById("profileDropdown");
+    const profileUserName = document.getElementById("profileUserName");
+    const signinLink = document.getElementById("signinLink");
+    const signupLink = document.getElementById("signupLink");
+    const adminLink = document.getElementById("adminLink");
+    const signOutBtn = document.getElementById("signOutBtn");
+
+    if(user && profileDropdown) {
+      profileUserName.textContent = user.name || user.email;
+      profileUserName.classList.remove("hidden");
+      signinLink.style.display = "none";
+      signupLink.style.display = "none";
+      adminLink.style.display = role === "admin" ? "block" : "none";
+      signOutBtn.classList.remove("hidden");
+    } else if(profileDropdown) {
+      profileUserName.classList.add("hidden");
+      signinLink.style.display = "block";
+      signupLink.style.display = "block";
+      adminLink.style.display = "block";
+      signOutBtn.classList.add("hidden");
+    }
+
+    // Sign out
+    if(signOutBtn) {
+      signOutBtn.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("role");
+        location.reload();
+      });
+    }
+  }
+
+  loadNavbar();
+</script>
+
+<script>
+// Override the existing form submission
+const contactForm = document.querySelector("form[action='https://api.web3forms.com/submit']");
+
+contactForm.addEventListener("submit", async function(e){
+    e.preventDefault(); // prevent default Web3Forms submission
+
+    const formData = {
+        name: this.name.value,
+        email: this.email.value,
+        message: this.message.value
+    };
+
+    try {
+        const res = await fetch("http://localhost:5002/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+        alert(data.message || "Message sent successfully!");
+        this.reset();
+    } catch(err) {
+        console.error(err);
+        alert("Error sending message. Please try again.");
+    }
+});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>india restaurant</title>
+</head>
+<body>
+<header class="fixed top-0 left-0 right-0 z-50 bg-white shadow">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
+    <img src="images/logo1.avif" alt="India Restaurant" class="h-10 w-auto">
+    <a href="index.html" class="text-2xl font-bold text-orange-700">India Restaurant</a>
+
+    <nav class="hidden md:flex space-x-6 font-medium ml-40">
+      <a href="index.html" class="hover:text-red-700">Home</a>
+      <a href="menu.html" class="hover:text-red-700">Menu</a>
+      <a href="reservation.html" class="hover:text-red-700">Reservation</a>
+      <a href="gallery.html" class="hover:text-red-700">Gallery</a>
+      <a href="about.html" class="hover:text-red-700">About</a>
+      <a href="contact.html" class="hover:text-red-700">Contact</a>
+    </nav>
+
+    <!-- Profile / Auth Dropdown -->
+    <div class="relative ml-auto">
+      <button id="profileIconBtn" onclick="toggleProfileDropdown()" class="flex items-center space-x-2 focus:outline-none">
+        <img src="https://www.svgrepo.com/show/452030/avatar-default.svg" alt="Profile" class="w-8 h-8 rounded-full">
+        <span id="profileUserName" class="text-sm font-medium text-gray-700 hidden"></span>
+      </button>
+      <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg">
+        <a href="login.html" id="signinLink" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign In</a>
+        <a href="register.html" id="signupLink" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Up</a>
+        <a href="admin-login.html" id="adminLink" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin</a>
+        <a href="#" id="signOutBtn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hidden">Sign Out</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const profileDropdown = document.getElementById("profileDropdown");
+  const profileUserName = document.getElementById("profileUserName");
+  const signinLink = document.getElementById("signinLink");
+  const signupLink = document.getElementById("signupLink");
+  const signOutBtn = document.getElementById("signOutBtn");
+  const adminLink = document.getElementById("adminLink");
+
+  // Toggle dropdown
+  function toggleProfileDropdown() {
+    profileDropdown.classList.toggle("hidden");
+  }
+
+  // Update dropdown on page load
+  window.addEventListener("load", () => {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const role = localStorage.getItem("role");
+
+    if (user) {
+      profileUserName.textContent = user.name || user.email;
+      profileUserName.classList.remove("hidden");
+      signinLink.style.display = "none";
+      signupLink.style.display = "none";
+
+      if(role === "admin") {
+        adminLink.style.display = "block"; // optional, admin dashboard
+      } else {
+        adminLink.style.display = "none";
+      }
+
+      signOutBtn.classList.remove("hidden");
+    } else {
+      profileUserName.classList.add("hidden");
+      signinLink.style.display = "block";
+      signupLink.style.display = "block";
+      adminLink.style.display = "block";
+      signOutBtn.classList.add("hidden");
+    }
+  });
+
+  // Sign out
+  signOutBtn.addEventListener("click", () => {
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("role");
+    location.reload();
+  });
+
+  // Close dropdown if clicked outside
+  window.addEventListener("click", function(e) {
+    if (!profileDropdown.contains(e.target) && !document.getElementById("profileIconBtn").contains(e.target)) {
+      profileDropdown.classList.add("hidden");
+    }
+  });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — India Restaurant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body class="antialiased text-gray-800 bg-blue-100">
+
+  <!-- NAVBAR PLACEHOLDER -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- HERO BANNER -->
+  <section class="relative pt-10">
+    <div class="relative h-72 md:h-96 bg-cover bg-center" 
+         style="background-image:url('images/about.jpg')">
+      <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+        <h1 class="text-white text-4xl md:text-5xl font-extrabold">About Us</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
+    <div data-aos="fade-right">
+      <h2 class="text-3xl font-bold mb-4">Our Story</h2>
+      <p class="text-gray-600 mb-4">
+        Since 1990, India Restaurant has been Kolkata’s landmark for 
+        authentic <strong>vegetarian cuisine</strong>. Our legacy blends traditional 
+        recipes with modern presentation, ensuring every guest enjoys 
+        flavors that feel like home yet excite the senses.
+      </p>
+      <p class="text-gray-600 mb-4">
+        From <em>Paneer Butter Masala</em> to <em>Dal Tadka</em>, from 
+        <em>Veg Biryani</em> to <em>Stuffed Paratha</em>, every dish is 
+        prepared with love, fresh ingredients, and a touch of tradition.
+      </p>
+      <p class="text-gray-600">
+        We believe in serving not just food, but happiness and memories.
+      </p>
+    </div>
+    <img src="images/aboutus.jpeg" 
+         alt="Veg Platter" class="rounded-xl shadow-lg" data-aos="fade-left">
+  </section>
+
+  <!-- MISSION -->
+  <section class="bg-green-50 py-16">
+    <div class="max-w-5xl mx-auto text-center px-6" data-aos="fade-up">
+      <h2 class="text-3xl font-bold mb-6">Our Mission</h2>
+      <p class="text-gray-700 text-lg">
+        To bring the richness of Indian vegetarian cuisine to every plate, 
+        keeping traditions alive while embracing innovation in taste and style.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-300 py-10 mt-12">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 px-6">
+      <div>
+        <h4 class="font-bold text-white mb-3">India Restaurant</h4>
+        <p>Serving Kolkata with authentic vegetarian dishes since 1990.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="hover:text-white">Home</a></li>
+          <li><a href="menu.html" class="hover:text-white">Menu</a></li>
+          <li><a href="reservation.html" class="hover:text-white">Reservation</a></li>
+          <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Contact</h4>
+        <p>Kolkata, India</p>
+        <p>+91 98765 43210</p>
+        <p>info@indiarestaurant.com</p>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-6">© 2025 India Restaurant. All rights reserved.</div>
+  </footer>
+
+  <!-- INIT AOS -->
+  <script>AOS.init();</script>
+
+  <!-- LOAD NAVBAR DYNAMICALLY -->
+  <script>
+    async function loadNavbar() {
+      const res = await fetch("navbar.html");
+      const text = await res.text();
+      document.getElementById("navbar-placeholder").innerHTML = text;
+    }
+    loadNavbar();
+  </script>
+
+    <!-- LOAD NAVBAR DYNAMICALLY -->
+  <script>
+  async function loadNavbar() {
+    const res = await fetch("navbar.html");
+    const text = await res.text();
+    document.getElementById("navbar-placeholder").innerHTML = text;
+
+    // After navbar is loaded, define dropdown functions
+    window.toggleProfileDropdown = function() {
+      const dropdown = document.getElementById("profileDropdown");
+      if(dropdown) dropdown.classList.toggle("hidden");
+    };
+
+    window.logout = function() {
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("role");
+      location.reload();
+    };
+
+    // Close dropdown when clicking outside
+    window.addEventListener("click", function(e) {
+      const dropdown = document.getElementById("profileDropdown");
+      const btn = document.getElementById("profileIconBtn");
+      if(dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+
+    // Update profile dropdown dynamically
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const role = localStorage.getItem("role");
+    const profileDropdown = document.getElementById("profileDropdown");
+    const profileUserName = document.getElementById("profileUserName");
+    const signinLink = document.getElementById("signinLink");
+    const signupLink = document.getElementById("signupLink");
+    const adminLink = document.getElementById("adminLink");
+    const signOutBtn = document.getElementById("signOutBtn");
+
+    if(user && profileDropdown) {
+      profileUserName.textContent = user.name || user.email;
+      profileUserName.classList.remove("hidden");
+      signinLink.style.display = "none";
+      signupLink.style.display = "none";
+      adminLink.style.display = role === "admin" ? "block" : "none";
+      signOutBtn.classList.remove("hidden");
+    } else if(profileDropdown) {
+      profileUserName.classList.add("hidden");
+      signinLink.style.display = "block";
+      signupLink.style.display = "block";
+      adminLink.style.display = "block";
+      signOutBtn.classList.add("hidden");
+    }
+
+    // Sign out
+    if(signOutBtn) {
+      signOutBtn.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("role");
+        location.reload();
+      });
+    }
+  }
+
+  loadNavbar();
+</script>
+
+</body>
+</html>

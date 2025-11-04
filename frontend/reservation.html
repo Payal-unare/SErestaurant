@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservation — India Restaurant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body class="antialiased text-gray-800 bg-amber-100">
+
+  <!-- NAVBAR PLACEHOLDER -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- HERO -->
+
+
+  <!-- 🌿 BACKGROUND IMAGE SECTION BELOW HERO -->
+  <section class="bg-cover bg-center py-20 mt-10" style="background-image: url('images/reservationtable.webp');">
+    
+      <div class="max-w-3xl mx-auto px-6">
+
+        
+        <!-- RESERVATION FORM -->
+<section class="bg-amber-100 bg-opacity-95 rounded-xl shadow-lg p-10" data-aos="fade-up">
+  <h2 class="text-3xl font-bold mb-6 text-center text-gray-900" data-aos="fade-down">Book a Table</h2>
+
+  <form id="reservationForm" class="space-y-4">
+    <!-- Name & Email -->
+    <div class="grid md:grid-cols-2 gap-4">
+      <label class="flex flex-col">
+        Name <span class="text-red-500">*</span>
+        <input type="text" id="fullName" placeholder="Full Name" class="p-3 rounded border" required>
+      </label>
+
+      <label class="flex flex-col">
+        Email <span class="text-red-500"><br></span>
+        <input type="email" id="email" placeholder="Email" class="p-3 rounded border" >
+      </label>
+    </div>
+
+    <!-- Contact & Date -->
+    <div class="grid md:grid-cols-2 gap-4">
+      <label class="flex flex-col">
+        Contact Number <span class="text-red-500">*</span>
+        <input type="tel" id="phone" placeholder="Phone Number" class="p-3 rounded border" required>
+      </label>
+
+      <label class="flex flex-col">
+        Date <span class="text-red-500">*</span>
+        <input type="date" id="date" class="p-3 rounded border" required>
+      </label>
+    </div>
+
+    <!-- Time & Number of People -->
+    <div class="grid md:grid-cols-2 gap-4">
+      <label class="flex flex-col">
+        Time <span class="text-red-500">*</span>
+        <input type="time" id="time" class="p-3 rounded border" required>
+      </label>
+
+      <label class="flex flex-col">
+        Number of People <span class="text-red-500">*</span>
+        <select id="people" class="p-3 rounded border" required>
+          <option value="">Number of People</option>
+          <option value="1">1 Person</option>
+          <option value="2">2 People</option>
+          <option value="3">3 People</option>
+          <option value="4">4 People</option>
+          <option value="5">5+ People</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Special Request -->
+    <label class="flex flex-col">
+      Special Request
+      <select id="specialRequests" class="w-full p-3 rounded border">
+        <option value="">Select Special Request</option>
+        <option value="Birthday">Birthday</option>
+        <option value="Anniversary">Anniversary</option>
+        <option value="Vegetarian Meal">Vegetarian Meal</option>
+        <option value="Wheelchair Access">Wheelchair Access</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <!-- Hidden input for custom request -->
+      <input type="text" id="customRequest" placeholder="Type your request" class="mt-2 p-3 rounded border hidden">
+    </label>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button type="submit" class="bg-amber-900 text-white px-6 py-3 rounded">Reserve Table</button>
+    </div>
+  </form>
+</section>
+
+<script>
+  const specialRequests = document.getElementById("specialRequests");
+  const customRequest = document.getElementById("customRequest");
+
+  specialRequests.addEventListener("change", () => {
+    if (specialRequests.value === "Other") {
+      customRequest.classList.remove("hidden");
+      customRequest.required = true;
+    } else {
+      customRequest.classList.add("hidden");
+      customRequest.required = false;
+      customRequest.value = ""; // clear previous input
+    }
+  });
+</script>
+
+
+      </div>
+    </div>
+  </section>
+  <!-- 🌿 END OF BACKGROUND SECTION -->
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-300 py-10 mt-12">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 px-6">
+      <div>
+        <h4 class="font-bold text-white mb-3">India Restaurant</h4>
+        <p>Serving Kolkata with authentic vegetarian dishes since 1990.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="hover:text-white">Home</a></li>
+          <li><a href="menu.html" class="hover:text-white">Menu</a></li>
+          <li><a href="reservation.html" class="hover:text-white">Reservation</a></li>
+          <li><a href="gallery.html" class="hover:text-white">Gallery</a></li>
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">Contact</h4>
+        <p>Kolkata, India</p>
+        <p>+91 98765 43210</p>
+        <p>info@indiarestaurant.com</p>
+      </div>
+    </div>
+    <div class="text-center text-sm text-gray-500 mt-6">© 2025 India Restaurant. All rights reserved.</div>
+  </footer>
+
+  <script>AOS.init();</script>
+
+  
+
+  <!-- BACKEND CONNECTION -->
+  <script>
+    const form = document.getElementById('reservationForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      let peopleValue = document.getElementById('people').value;
+      if (peopleValue === "5+") peopleValue = 5;
+
+      const data = {
+        fullName: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        date: new Date(document.getElementById('date').value),
+        time: document.getElementById('time').value,
+        people: parseInt(peopleValue) || 1,
+        specialRequests: document.getElementById('specialRequests').value
+      };
+
+      try {
+        const res = await fetch('http://localhost:5002/api/reservations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          alert('✅ Reservation created successfully!');
+          form.reset();
+        } else {
+          alert('❌ Error: ' + result.message);
+        }
+      } catch (err) {
+        alert('❌ Network error: ' + err.message);
+      }
+    });
+  </script>
+
+  <!-- INCLUDE NAVBAR DYNAMICALLY -->
+  <script>
+    async function loadNavbar() {
+      const res = await fetch("navbar.html");
+      const text = await res.text();
+      document.getElementById("navbar-placeholder").innerHTML = text;
+    }
+    loadNavbar();
+  </script>
+
+    <!-- LOAD NAVBAR DYNAMICALLY -->
+  <script>
+  async function loadNavbar() {
+    const res = await fetch("navbar.html");
+    const text = await res.text();
+    document.getElementById("navbar-placeholder").innerHTML = text;
+
+    // After navbar is loaded, define dropdown functions
+    window.toggleProfileDropdown = function() {
+      const dropdown = document.getElementById("profileDropdown");
+      if(dropdown) dropdown.classList.toggle("hidden");
+    };
+
+    window.logout = function() {
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("role");
+      location.reload();
+    };
+
+    // Close dropdown when clicking outside
+    window.addEventListener("click", function(e) {
+      const dropdown = document.getElementById("profileDropdown");
+      const btn = document.getElementById("profileIconBtn");
+      if(dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+
+    // Update profile dropdown dynamically
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const role = localStorage.getItem("role");
+    const profileDropdown = document.getElementById("profileDropdown");
+    const profileUserName = document.getElementById("profileUserName");
+    const signinLink = document.getElementById("signinLink");
+    const signupLink = document.getElementById("signupLink");
+    const adminLink = document.getElementById("adminLink");
+    const signOutBtn = document.getElementById("signOutBtn");
+
+    if(user && profileDropdown) {
+      profileUserName.textContent = user.name || user.email;
+      profileUserName.classList.remove("hidden");
+      signinLink.style.display = "none";
+      signupLink.style.display = "none";
+      adminLink.style.display = role === "admin" ? "block" : "none";
+      signOutBtn.classList.remove("hidden");
+    } else if(profileDropdown) {
+      profileUserName.classList.add("hidden");
+      signinLink.style.display = "block";
+      signupLink.style.display = "block";
+      adminLink.style.display = "block";
+      signOutBtn.classList.add("hidden");
+    }
+
+    // Sign out
+    if(signOutBtn) {
+      signOutBtn.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("role");
+        location.reload();
+      });
+    }
+  }
+
+  loadNavbar();
+</script>
+
+  <!-- LOAD NAVBAR DYNAMICALLY -->
+  <script>
+  async function loadNavbar() {
+    const res = await fetch("navbar.html");
+    const text = await res.text();
+    document.getElementById("navbar-placeholder").innerHTML = text;
+
+    // After navbar is loaded, define dropdown functions
+    window.toggleProfileDropdown = function() {
+      const dropdown = document.getElementById("profileDropdown");
+      if(dropdown) dropdown.classList.toggle("hidden");
+    };
+
+    window.logout = function() {
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("role");
+      location.reload();
+    };
+
+    // Close dropdown when clicking outside
+    window.addEventListener("click", function(e) {
+      const dropdown = document.getElementById("profileDropdown");
+      const btn = document.getElementById("profileIconBtn");
+      if(dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+
+    // Update profile dropdown dynamically
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const role = localStorage.getItem("role");
+    const profileDropdown = document.getElementById("profileDropdown");
+    const profileUserName = document.getElementById("profileUserName");
+    const signinLink = document.getElementById("signinLink");
+    const signupLink = document.getElementById("signupLink");
+    const adminLink = document.getElementById("adminLink");
+    const signOutBtn = document.getElementById("signOutBtn");
+
+    if(user && profileDropdown) {
+      profileUserName.textContent = user.name || user.email;
+      profileUserName.classList.remove("hidden");
+      signinLink.style.display = "none";
+      signupLink.style.display = "none";
+      adminLink.style.display = role === "admin" ? "block" : "none";
+      signOutBtn.classList.remove("hidden");
+    } else if(profileDropdown) {
+      profileUserName.classList.add("hidden");
+      signinLink.style.display = "block";
+      signupLink.style.display = "block";
+      adminLink.style.display = "block";
+      signOutBtn.classList.add("hidden");
+    }
+
+    // Sign out
+    if(signOutBtn) {
+      signOutBtn.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("role");
+        location.reload();
+      });
+    }
+  }
+
+  loadNavbar();
+</script>
+
+
+</body>
+</html>
