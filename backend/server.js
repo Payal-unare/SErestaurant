@@ -27,6 +27,11 @@ mongoose
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Server
+app.get("/", (req, res) => {
+  res.send("backend is running...!");
+});
+
+
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
   console.log(`🚀 Server running at port ${PORT}`);
